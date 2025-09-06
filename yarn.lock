@@ -7,7 +7,7 @@
   resolved "https://registry.npmjs.org/@napi-rs/canvas-win32-x64-msvc/-/canvas-win32-x64-msvc-0.1.78.tgz"
   integrity sha512-/eKlTZBtGUgpRKalzOzRr6h7KVSuziESWXgBcBnXggZmimwIJWPJlEcbrx5Tcwj8rPuZiANXQOG9pPgy9Q4LTQ==
 
-"@napi-rs/canvas@^0.1.50":
+"@napi-rs/canvas@^0.1.78":
   version "0.1.78"
   resolved "https://registry.npmjs.org/@napi-rs/canvas/-/canvas-0.1.78.tgz"
   integrity sha512-YaBHJvT+T1DoP16puvWM6w46Lq3VhwKIJ8th5m1iEJyGh7mibk5dT7flBvMQ1EH1LYmMzXJ+OUhu+8wQ9I6u7g==

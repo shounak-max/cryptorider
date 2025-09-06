@@ -234,15 +234,13 @@ class NFTCryptoRider {
             const collectionGrid = document.getElementById('collectionGrid');
             collectionGrid.innerHTML = '';
 
-            // For demo purposes, show placeholder NFTs
-            // In a real app, you would fetch from your contract or IPFS
-            const placeholderNFTs = [
-                { id: 1, name: "CryptoRider #1", image: "https://via.placeholder.com/250x250/6366f1/ffffff?text=NFT+1" },
-                { id: 2, name: "CryptoRider #2", image: "https://via.placeholder.com/250x250/8b5cf6/ffffff?text=NFT+2" },
-                { id: 3, name: "CryptoRider #3", image: "https://via.placeholder.com/250x250/ec4899/ffffff?text=NFT+3" },
-                { id: 4, name: "CryptoRider #4", image: "https://via.placeholder.com/250x250/10b981/ffffff?text=NFT+4" },
-                { id: 5, name: "CryptoRider #5", image: "https://via.placeholder.com/250x250/f59e0b/ffffff?text=NFT+5" }
-            ];
+            // Load the actual generated NFTs
+            const nftCount = 5; // We generated 5 NFTs
+            const placeholderNFTs = Array.from({ length: nftCount }, (_, i) => ({
+                id: i + 1,
+                name: `CryptoRider #${i + 1}`,
+                image: `../../build/images/${i + 1}.png`
+            }));
 
             placeholderNFTs.forEach(nft => {
                 const nftCard = this.createNFTCard(nft);
