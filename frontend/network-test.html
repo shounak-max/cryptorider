@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover { background: #0056b3; }
+        .result {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 Network Test</h1>
+        <p>Let's test your MetaMask connection and network setup.</p>
+        
+        <button onclick="testConnection()">Test Connection</button>
+        <button onclick="switchToMumbai()">Switch to Mumbai</button>
+        <button onclick="openMainApp()">Open NFT App</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function testConnection() {
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                if (typeof window.ethereum === 'undefined') {
+                    resultDiv.innerHTML = '<div class="result error">❌ MetaMask not found</div>';
+                    return;
+                }
+
+                // Get account
+                const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                if (accounts.length === 0) {
+                    resultDiv.innerHTML = '<div class="result error">❌ No account connected. Please connect MetaMask.</div>';
+                    return;
+                }
+
+                // Get network
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                const chainIdNumber = parseInt(chainId, 16);
+
+                // Get balance
+                const balance = await window.ethereum.request({
+                    method: 'eth_getBalance',
+                    params: [accounts[0], 'latest']
+                });
+                const balanceInEth = (parseInt(balance, 16) / Math.pow(10, 18)).toFixed(4);
+
+                let networkName = 'Unknown';
+                let currency = 'ETH';
+                let isCorrectNetwork = false;
+
+                if (chainIdNumber === 1) {
+                    networkName = 'Ethereum Mainnet';
+                } else if (chainIdNumber === 5) {
+                    networkName = 'Goerli Testnet';
+                } else if (chainIdNumber === 11155111) {
+                    networkName = 'Sepolia Testnet';
+                } else if (chainIdNumber === 137) {
+                    networkName = 'Polygon Mainnet';
+                    currency = 'MATIC';
+                } else if (chainIdNumber === 80001) {
+                    networkName = 'Mumbai Testnet';
+                    currency = 'MATIC';
+                    isCorrectNetwork = true;
+                }
+
+                const statusClass = isCorrectNetwork ? 'success' : 'error';
+                const statusIcon = isCorrectNetwork ? '✅' : '❌';
+
+                resultDiv.innerHTML = `
+                    <div class="result ${statusClass}">
+                        ${statusIcon} <strong>Connection Status:</strong><br>
+                        Account: ${accounts[0].slice(0,6)}...${accounts[0].slice(-4)}<br>
+                        Network: ${networkName} (Chain ID: ${chainIdNumber})<br>
+                        Balance: ${balanceInEth} ${currency}<br>
+                        ${isCorrectNetwork ? 'Ready to mint NFTs!' : 'Please switch to Mumbai Testnet (Chain ID: 80001)'}
+                    </div>
+                `;
+
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function switchToMumbai() {
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x13881' }], // 80001 in hex
+                });
+                setTimeout(testConnection, 1000);
+            } catch (switchError) {
+                if (switchError.code === 4902) {
+                    // Network not added, add it
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [{
+                                chainId: '0x13881',
+                                chainName: 'Mumbai Testnet',
+                                rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
+                                blockExplorerUrls: ['https://mumbai.polygonscan.com'],
+                                nativeCurrency: {
+                                    name: 'MATIC',
+                                    symbol: 'MATIC',
+                                    decimals: 18
+                                }
+                            }],
+                        });
+                        setTimeout(testConnection, 1000);
+                    } catch (addError) {
+                        alert('Failed to add Mumbai network: ' + addError.message);
+                    }
+                } else {
+                    alert('Failed to switch network: ' + switchError.message);
+                }
+            }
+        }
+
+        function openMainApp() {
+            window.open('index.html', '_blank');
+        }
+
+        // Auto-test on page load
+        window.onload = function() {
+            setTimeout(testConnection, 1000);
+        };
+    </script>
+</body>
+</html>

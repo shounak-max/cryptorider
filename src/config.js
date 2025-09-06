@@ -5,9 +5,9 @@ const { NETWORK } = require('../constants/network.js');
 const network = NETWORK.eth;
 
 // General metadata for Ethereum
-const namePrefix = "Your Collection";
-const description = " description changed";
-const baseUri = "ipfs://bafybeiaqwkz2jxrkml4k7jupv2j6nbqwyjajrvrcwcrzkjt5icr3qe3l3e";
+const namePrefix = "CryptoRider";
+const description = "Unique anime character combinations from Naruto, Pokemon, and Demon Slayer. Each NFT is algorithmically generated with different rarity traits and combinations.";
+const baseUri = "ipfs://YOUR_IPFS_CID_HERE"; // Replace with your actual IPFS CID
 
 const solanaMetadata = {
   symbol: "YC",

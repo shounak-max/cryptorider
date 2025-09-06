@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaMask Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #6c757d; cursor: not-allowed; }
+        .step {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🦊 MetaMask Installation Test</h1>
+        
+        <div id="status"></div>
+        
+        <div class="step">
+            <h3>Step 1: Check MetaMask Installation</h3>
+            <button onclick="checkMetaMask()">Check MetaMask</button>
+            <div id="metamask-status"></div>
+        </div>
+        
+        <div class="step">
+            <h3>Step 2: Connect Wallet</h3>
+            <button id="connect-btn" onclick="connectWallet()" disabled>Connect Wallet</button>
+            <div id="connection-status"></div>
+        </div>
+        
+        <div class="step">
+            <h3>Step 3: Check Network</h3>
+            <button id="network-btn" onclick="checkNetwork()" disabled>Check Network</button>
+            <div id="network-status"></div>
+        </div>
+        
+        <div class="step">
+            <h3>Step 4: Get Account Info</h3>
+            <button id="account-btn" onclick="getAccountInfo()" disabled>Get Account Info</button>
+            <div id="account-status"></div>
+        </div>
+        
+        <div style="margin-top: 30px; text-align: center;">
+            <button onclick="openMainApp()" style="background: #28a745;">Open Main NFT App</button>
+        </div>
+    </div>
+
+    <script>
+        let web3;
+        let account;
+
+        function updateStatus(message, type = 'info') {
+            document.getElementById('status').innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function checkMetaMask() {
+            if (typeof window.ethereum !== 'undefined') {
+                document.getElementById('metamask-status').innerHTML = '<div class="status success">✅ MetaMask is installed!</div>';
+                document.getElementById('connect-btn').disabled = false;
+                updateStatus('MetaMask detected successfully!', 'success');
+            } else {
+                document.getElementById('metamask-status').innerHTML = '<div class="status error">❌ MetaMask is not installed. Please install MetaMask first.</div>';
+                updateStatus('MetaMask not found. Please install MetaMask from metamask.io', 'error');
+            }
+        }
+
+        async function connectWallet() {
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                account = accounts[0];
+                
+                document.getElementById('connection-status').innerHTML = `<div class="status success">✅ Connected! Account: ${account.slice(0,6)}...${account.slice(-4)}</div>`;
+                document.getElementById('network-btn').disabled = false;
+                document.getElementById('account-btn').disabled = false;
+                
+                updateStatus('Wallet connected successfully!', 'success');
+            } catch (error) {
+                document.getElementById('connection-status').innerHTML = `<div class="status error">❌ Failed to connect: ${error.message}</div>`;
+                updateStatus('Failed to connect wallet', 'error');
+            }
+        }
+
+        async function checkNetwork() {
+            try {
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                const chainIdNumber = parseInt(chainId, 16);
+                
+                if (chainIdNumber === 80001) {
+                    document.getElementById('network-status').innerHTML = '<div class="status success">✅ Correct network! Mumbai Testnet (80001)</div>';
+                    updateStatus('Network is correct!', 'success');
+                } else {
+                    document.getElementById('network-status').innerHTML = `<div class="status error">❌ Wrong network! Current: ${chainIdNumber}, Expected: 80001 (Mumbai Testnet)</div>`;
+                    updateStatus('Please switch to Mumbai Testnet', 'error');
+                }
+            } catch (error) {
+                document.getElementById('network-status').innerHTML = `<div class="status error">❌ Failed to check network: ${error.message}</div>`;
+            }
+        }
+
+        async function getAccountInfo() {
+            try {
+                const balance = await window.ethereum.request({
+                    method: 'eth_getBalance',
+                    params: [account, 'latest']
+                });
+                
+                const balanceInEth = (parseInt(balance, 16) / Math.pow(10, 18)).toFixed(4);
+                
+                document.getElementById('account-status').innerHTML = `
+                    <div class="status success">
+                        ✅ Account: ${account}<br>
+                        💰 Balance: ${balanceInEth} MATIC
+                        ${balanceInEth < 0.001 ? '<br>⚠️ Low balance! Get test MATIC from a faucet.' : ''}
+                    </div>
+                `;
+                
+                if (balanceInEth < 0.001) {
+                    updateStatus('Low balance detected. Please get test MATIC from a faucet.', 'error');
+                } else {
+                    updateStatus('Account info retrieved successfully!', 'success');
+                }
+            } catch (error) {
+                document.getElementById('account-status').innerHTML = `<div class="status error">❌ Failed to get account info: ${error.message}</div>`;
+            }
+        }
+
+        function openMainApp() {
+            window.open('index.html', '_blank');
+        }
+
+        // Auto-check MetaMask on page load
+        window.onload = function() {
+            setTimeout(checkMetaMask, 1000);
+        };
+    </script>
+</body>
+</html>

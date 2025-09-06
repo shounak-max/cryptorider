@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoRider - Quick Deploy</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .step {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #007bff;
+        }
+        .step h3 {
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .button {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 10px 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        .expected-output {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .cost-estimate {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 5px;
+        }
+        .status.ready { background: #d4edda; color: #155724; }
+        .status.pending { background: #fff3cd; color: #856404; }
+        .status.complete { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 CryptoRider NFT - Quick Deploy</h1>
+        <p>Complete deployment guide with expected outputs</p>
+
+        <div class="step">
+            <h3>✅ Step 1: Assets Generated</h3>
+            <div class="expected-output">
+                <strong>Expected Output:</strong>
+                <ul>
+                    <li>5 NFT images created in <code>build/images/</code></li>
+                    <li>5 metadata files created in <code>build/json/</code></li>
+                    <li>Each NFT has unique DNA and attributes</li>
+                </ul>
+            </div>
+            <span class="status ready">COMPLETED</span>
+        </div>
+
+        <div class="step">
+            <h3>🌐 Step 2: IPFS Setup</h3>
+            <p><strong>Action Required:</strong> Upload to Pinata</p>
+            <div class="expected-output">
+                <strong>Expected Output:</strong>
+                <ul>
+                    <li>Images CID: <code>QmXxXxXx...</code> (from Pinata)</li>
+                    <li>Metadata CID: <code>QmYyYyYy...</code> (from Pinata)</li>
+                    <li>Test links: <code>https://gateway.pinata.cloud/ipfs/YOUR_CID/1.png</code></li>
+                </ul>
+            </div>
+            <a href="https://pinata.cloud" target="_blank" class="button">Open Pinata</a>
+            <span class="status pending">PENDING</span>
+        </div>
+
+        <div class="step">
+            <h3>📝 Step 3: Contract Deployment</h3>
+            <p><strong>Action Required:</strong> Deploy to Ethereum</p>
+            <div class="expected-output">
+                <strong>Expected Output:</strong>
+                <ul>
+                    <li>Contract Address: <code>0x1234...5678</code></li>
+                    <li>Transaction Hash: <code>0xabcd...efgh</code></li>
+                    <li>Gas Used: ~2,000,000 gas</li>
+                    <li>Deployment Cost: $80-150</li>
+                </ul>
+            </div>
+            <a href="https://remix.ethereum.org" target="_blank" class="button">Open Remix</a>
+            <span class="status pending">PENDING</span>
+        </div>
+
+        <div class="step">
+            <h3>✅ Step 4: Contract Verification</h3>
+            <p><strong>Action Required:</strong> Verify on Etherscan</p>
+            <div class="expected-output">
+                <strong>Expected Output:</strong>
+                <ul>
+                    <li>Green checkmark "Verified" on Etherscan</li>
+                    <li>Source code visible to public</li>
+                    <li>Contract functions accessible</li>
+                </ul>
+            </div>
+            <a href="https://etherscan.io" target="_blank" class="button">Open Etherscan</a>
+            <span class="status pending">PENDING</span>
+        </div>
+
+        <div class="step">
+            <h3>🌐 Step 5: Frontend Update</h3>
+            <p><strong>Action Required:</strong> Update configuration</p>
+            <div class="expected-output">
+                <strong>Expected Output:</strong>
+                <ul>
+                    <li>Contract address updated in config</li>
+                    <li>IPFS URLs working</li>
+                    <li>Minting interface functional</li>
+                    <li>MetaMask integration working</li>
+                </ul>
+            </div>
+            <a href="frontend/index.html" target="_blank" class="button">Open Frontend</a>
+            <span class="status pending">PENDING</span>
+        </div>
+
+        <div class="step">
+            <h3>🎉 Step 6: Launch</h3>
+            <p><strong>Final Steps:</strong></p>
+            <div class="expected-output">
+                <strong>Expected Output:</strong>
+                <ul>
+                    <li>Collection live on Ethereum mainnet</li>
+                    <li>Users can mint for 0.05 ETH</li>
+                    <li>NFTs appear in MetaMask wallets</li>
+                    <li>Collection tradeable on OpenSea</li>
+                    <li>Revenue flowing to your wallet</li>
+                </ul>
+            </div>
+            <span class="status pending">PENDING</span>
+        </div>
+
+        <div class="cost-estimate">
+            <h3>💰 Expected Costs</h3>
+            <ul>
+                <li><strong>Contract Deployment:</strong> $80-150</li>
+                <li><strong>Reveal Transaction:</strong> $30-50</li>
+                <li><strong>IPFS Hosting:</strong> Free</li>
+                <li><strong>Frontend Hosting:</strong> Free</li>
+                <li><strong>Total Setup:</strong> ~$110-200</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>📊 Revenue Potential</h3>
+            <div class="expected-output">
+                <strong>Expected Revenue:</strong>
+                <ul>
+                    <li><strong>Total Supply:</strong> 1000 NFTs</li>
+                    <li><strong>Mint Price:</strong> 0.05 ETH each</li>
+                    <li><strong>Potential Revenue:</strong> 50 ETH (~$100,000 at $2000 ETH)</li>
+                    <li><strong>Secondary Sales:</strong> 2.5% royalty (if set)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <h2>🎯 Ready to Deploy?</h2>
+            <p>Follow the steps above in order. Each step builds on the previous one.</p>
+            <a href="ethereum-deployment.html" class="button">View Detailed Guide</a>
+        </div>
+    </div>
+</body>
+</html>

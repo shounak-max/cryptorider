@@ -24,7 +24,7 @@
   "author": "Daniel Eugene Botha (HashLips)",
   "license": "MIT",
   "dependencies": {
-    "canvas": "^2.8.0",
+    "@napi-rs/canvas": "^0.1.50",
     "gif-encoder-2": "^1.0.5",
     "sha1": "^1.1.1"
   }

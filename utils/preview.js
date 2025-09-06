@@ -1,6 +1,6 @@
 const basePath = process.cwd();
 const fs = require("fs");
-const { createCanvas, loadImage } = require("canvas");
+const { createCanvas, loadImage } = require("@napi-rs/canvas");
 const buildDir = `${basePath}/build`;
 
 const { preview } = require('../src/config.js');

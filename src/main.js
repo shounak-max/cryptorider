@@ -2,7 +2,7 @@ const basePath = process.cwd();
 const { NETWORK } = require('../constants/network.js');
 const fs = require("fs");
 const sha1 = require('sha1');
-const { createCanvas, loadImage } = require('canvas');
+const { createCanvas, loadImage } = require('@napi-rs/canvas');
 const buildDir = `${basePath}/build`;
 const layersDir = `${basePath}/layers`;
 const {

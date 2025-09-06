@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { createCanvas, loadImage } = require("canvas");
+const { createCanvas, loadImage } = require("@napi-rs/canvas");
 const basePath = process.cwd();
 const buildDir = `${basePath}/build/json`;
 const inputDir = `${basePath}/build/images`;
